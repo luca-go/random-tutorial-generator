@@ -55,22 +55,15 @@ def print_tutorial():
         time.sleep(0.5)
         k = k + 1        
 
-    im1 = Image.open(imlistio[0])           #for cycle somehow breaks the resizing
-    im2 = Image.open(imlistio[1])
-    im3 = Image.open(imlistio[2])
-    im4 = Image.open(imlistio[3])
-
-    im1 = im1.resize((800, 600))
-    im2 = im2.resize((800, 600))
-    im3 = im3.resize((800, 600))
-    im4 = im4.resize((800, 600))
+    
+    listresized = list(map(resize, imlistio))
 
     back = Image.new('RGBA', (1600, 1500), 'white')
     back_im = back.copy()
-    back_im.paste(im1, (0, 300))
-    back_im.paste(im2, (800, 300))
-    back_im.paste(im3, (0, 900))
-    back_im.paste(im4, (800, 900))
+    back_im.paste(listresized[0], (0, 300))
+    back_im.paste(listresized[1], (800, 300))
+    back_im.paste(listresized[2], (0, 900))
+    back_im.paste(listresized[3], (800, 900))
 
     draw = ImageDraw.Draw(back_im)
     font = ImageFont.truetype(path + '/Roboto-Regular.ttf', 80)
@@ -79,6 +72,12 @@ def print_tutorial():
 
     back_im.save(path + '/tutorial.png', quality=100)
     back_im.show()
+
+def resize(im):
+    image = Image.open(im)
+    resized_image = image.resize((800, 600))
+    return resized_image
+
 
 if __name__ == "__main__":
     print_tutorial()
