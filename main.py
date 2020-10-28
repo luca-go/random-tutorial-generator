@@ -17,8 +17,7 @@ def get_images(id):
     data = r.json()
     image_list = data['parse']['images']
     if not image_list:
-        #raise ParseError
-        print('ahia')
+        raise ParseError
     else:
         for i in image_list:
             im_data = requests.get(api + 'query&titles=File:' + i + '&prop=imageinfo&iiprop=url')
