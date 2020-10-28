@@ -1,6 +1,6 @@
 import requests
 import json
-from whapi import get_id, random_article, return_details, get_images
+from whapi import get_id, random_article, return_details
 import random
 import time
 import urllib.request
@@ -9,6 +9,27 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 
 path = (os.path.dirname(os.path.realpath(__file__)))
+api = 'https://www.wikihow.com/api.php?format=json&action='
+
+def get_images(id):
+    images = []
+    r = requests.get(api + 'parse&prop=images&pageid=' + str(id))
+    data = r.json()
+    image_list = data['parse']['images']
+    if not image_list:
+        #raise ParseError
+        print('ahia')
+    else:
+        for i in image_list:
+            im_data = requests.get(api + 'query&titles=File:' + i + '&prop=imageinfo&iiprop=url')
+            image_info = im_data.json()
+            pages = image_info['query']['pages']
+            for key in pages.keys():
+                image_url = pages[key]['imageinfo'][0]['url']
+                if image_url != 'https://www.wikihow.com/images/7/78/Incomplete_856.gif':
+                    images.append(image_url)
+                
+    return images
 
 def get_title():
     random_howto = random_article() #returns an ID
