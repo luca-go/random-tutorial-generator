@@ -7,6 +7,7 @@ import urllib.request
 import io
 from PIL import Image, ImageDraw, ImageFont
 import os
+from whapi.exceptions import ParseError
 
 path = (os.path.dirname(os.path.realpath(__file__)))
 api = 'https://www.wikihow.com/api.php?format=json&action='
@@ -75,15 +76,14 @@ def print_tutorial():
         time.sleep(0.5)
         k = k + 1        
 
-    
     listresized = list(map(resize, imlistio))
 
-    back = Image.new('RGBA', (1600, 1500), 'white')
+    back = Image.new('RGBA', (1620, 1520), 'white')
     back_im = back.copy()
-    back_im.paste(listresized[0], (0, 300))
-    back_im.paste(listresized[1], (800, 300))
-    back_im.paste(listresized[2], (0, 900))
-    back_im.paste(listresized[3], (800, 900))
+    back_im.paste(listresized[0], (5, 300))
+    back_im.paste(listresized[1], (815, 300))
+    back_im.paste(listresized[2], (5, 915))
+    back_im.paste(listresized[3], (815, 915))
 
     draw = ImageDraw.Draw(back_im)
     font = ImageFont.truetype(path + '/Roboto-Regular.ttf', 80)
@@ -97,7 +97,6 @@ def resize(im):
     image = Image.open(im)
     resized_image = image.resize((800, 600))
     return resized_image
-
 
 if __name__ == "__main__":
     print_tutorial()
