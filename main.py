@@ -88,7 +88,7 @@ def print_tutorial():
     draw = ImageDraw.Draw(back_im)
     font = ImageFont.truetype(path + '/Roboto-Regular.ttf', 80)
 
-    draw.text((5, 20), get_title(),(0,0,0),font=font)
+    draw.text((5, 20), get_title(),(0,0,0),font=font, spacing=0)
 
     back_im.save(path + '/tutorial.png', quality=100)
     back_im.show()
